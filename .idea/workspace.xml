@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="97babacf-3104-4710-b00c-fc22ab46f5d1" name="Changes" comment="" />
+    <list default="true" id="97babacf-3104-4710-b00c-fc22ab46f5d1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FlowElements/FilterTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/FlowElements/FilterTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FlowElements/TokenFlow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/FlowElements/TokenFlow.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FlowElements/UploadCSVFlow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/FlowElements/UploadCSVFlow.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/styles.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +24,9 @@
         <option value="TypeScript JSX File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
@@ -33,6 +43,7 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "/home/steven/projects/wise-splitwise-connector",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -40,6 +51,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "npm.start.executor": "Run",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "ts.external.directory.path": "/home/steven/projects/wise-splitwise-connector/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -71,6 +83,7 @@
       <workItem from="1763615552464" duration="134000" />
       <workItem from="1764972077506" duration="30581000" />
       <workItem from="1765327603786" duration="6754000" />
+      <workItem from="1765338990079" duration="2299000" />
     </task>
     <servers />
   </component>
@@ -82,7 +95,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/FlowElements/FilterTable.tsx</url>
-          <line>53</line>
+          <line>49</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

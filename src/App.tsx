@@ -21,7 +21,7 @@ function App() {
     setFormData({ ...formData, ...data });
   };
 
-  return <div className="grid h-56 grid-cols-3 content-normal gap-4">
+  return <div className="m-10 p-8 self-center">
       {step === 1 && <TokenFlow onNext={handleNextStep} onChange={handleFormDataChange} />}
       {step === 2 && <UploadCSVFlow onNext={handleNextStep} onPrev={handlePrevStep} onChange={handleFormDataChange} />}
       {step === 3 && <FilterTable onPrev={handlePrevStep} onNext={handleNextStep} onChange={handleFormDataChange} csvRows={formData.csvRows} />}

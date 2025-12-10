@@ -1,10 +1,7 @@
 import {useDropzone} from "react-dropzone";
-import {useState} from "react";
+import React, {useMemo, useState} from "react";
 import Papa from 'papaparse';
 import {CSVDataTable, CSVRow} from "./CSVDataTable";
-import Moment from "moment/moment";
-import {dateTimeFormat} from "./FilterTable";
-
 
 export interface UploadCSVProps {
     onNext: () => void;
@@ -81,7 +78,8 @@ export const UploadCSVFlow: React.FC<UploadCSVProps> = ({onNext, onPrev, onChang
         if (rows.length > 0) {
             onChange({"csvRows": rows});
             setNextDisabled(false);
-            return <div>
+            return <div className="pt-8">
+                <div className="p-4"><p>Previewing first 10 rows</p></div>
                 <CSVDataTable rows={rows.slice(0, 10)}></CSVDataTable>
             </div>;
         } else {
@@ -97,25 +95,35 @@ export const UploadCSVFlow: React.FC<UploadCSVProps> = ({onNext, onPrev, onChang
 
     return <div>
         <div>
-            <h1>Upload your transactions CSV file </h1>
+            <h1 className="bold text-lg font-black">CSV file</h1>
+            <p>Upload your transactions CSV file. </p>
+            <p>This can be found at...</p>
         </div>
-        <section className="container">
-            <div {...getRootProps({className: 'dropzone'})}>
-                <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
+       <div className="pt-8">
+           <section className="container">
+               <div {...getRootProps({className: "dropzone"})}>
+                   <input {...getInputProps()} />
+                   <p>Drag 'n' drop some files here, or click to select files</p>
+               </div>
+               {preview ?? <div className="pt-8">
+                   <div>
+                       <p>previewing the first 10 rows</p>
+                   </div>
+                   <div>
+                       {preview}
+                   </div>
+               </div>}
+           </section>
+       </div>
+        <footer className="pt-8">
+            <div className="inline-flex">
+                <button
+                    className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-l"
+                    onClick={onPrev}>Previous</button>
+                <button
+                    className={ nextDisabled ? "bg-gray-500 text-grey py-2 px-4 rounded-r" : "bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-r"}
+                    onClick={onNext} disabled={nextDisabled}>Next</button>
             </div>
-            {preview ?? <div>
-                <div>
-                    <p>previewing the first 10 rows</p>
-                </div>
-                <div>
-                    {preview}
-                </div>
-            </div>}
-        </section>
-        <footer>
-            <button onClick={onPrev}>Previous</button>
-            <button onClick={onNext} disabled={nextDisabled}>Next</button>
         </footer>
     </div>
 }

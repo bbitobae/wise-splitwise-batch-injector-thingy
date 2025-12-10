@@ -23,17 +23,18 @@ export const TokenFlow: React.FC<TokenFlowProps> = ({ onNext, onChange }) => {
 
     return <div>
         <div>
-            <h1>Splitwise Credentials</h1>
+            <h1 className="bold text-lg font-black">Splitwise Credentials</h1>
             <p>Enter Splitwise client ID and secret</p>
+            <p>These can be found at ...</p>
         </div>
-        <div>
+        <div className="pt-8">
             <label htmlFor={clientIDID}
                    className="block mb-2.5 text-sm font-medium text-heading">Client ID</label>
             <input id={clientIDID} name='clientID'
                    className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                    placeholder="Client ID" type='text' onChange={handleChange} />
         </div>
-        <div>
+        <div className="pt-2">
             <label
                 htmlFor={clientSecretID}
                 className="block mb-2.5 text-sm font-medium text-heading">Client Secret</label>
@@ -42,9 +43,9 @@ export const TokenFlow: React.FC<TokenFlowProps> = ({ onNext, onChange }) => {
                 className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                 name='client_secret' placeholder="Client Secret" type='password' onChange={handleChange} />
         </div>
-        <footer>
+        <footer className="pt-2">
             <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="max-w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 onClick={onNext}>Next</button>
         </footer>
     </div>

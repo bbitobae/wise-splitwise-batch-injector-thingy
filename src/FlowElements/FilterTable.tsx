@@ -1,9 +1,10 @@
 import {CSVDataTable, CSVRow} from "./CSVDataTable";
-import {useEffect, useState} from "react";
+import {useEffect, useId, useState} from "react";
 import Datetime from "react-datetime";
 import '../css/datetime.css'
 import Moment from "moment";
 import {MultiSelectDropdown} from "./MultiSelectDropdown";
+import {start} from "node:repl";
 
 export interface FilterTableProps {
     onPrev: () => void;
@@ -14,8 +15,13 @@ export interface FilterTableProps {
 
 export const dateTimeFormat = 'YYYY-MM-DDTHH:mm:ss';
 
-
 export const FilterTable: React.FC<FilterTableProps> = ({onPrev, onNext, onChange, csvRows}) => {
+
+    const startDataId = useId()
+    const endDateId = useId()
+    const categoryId = useId()
+
+
     const parseDate = (dt: number | Date | string | Moment.Moment | undefined): Moment.Moment => {
         if (!dt) return Moment(0)
         if (typeof dt === 'string') return Moment(Date.parse(dt));
@@ -31,16 +37,6 @@ export const FilterTable: React.FC<FilterTableProps> = ({onPrev, onNext, onChang
         endDate: parseDate(csvRows[csvRows.length - 1]?.createdOn),
         categories: [...allCategories]
     })
-
-    // useEffect(() => {
-    //     const filteredRows = csvRows.filter(row => {
-    //         if (!parseDate(row.createdOn).isBetween(filters.startDate, filters.endDate)) return false;
-    //         if (!filters.categories.includes(row.category)) return false;
-    //         return true;
-    //     });
-    //     onChange({"transactions": filteredRows});
-    //     setFilteredRows(filteredRows);
-    // }, [filteredRows, filters, onChange, csvRows]);
 
     const applyFilters = () => {
         console.log(csvRows.length);
@@ -72,20 +68,20 @@ export const FilterTable: React.FC<FilterTableProps> = ({onPrev, onNext, onChang
 
     return <div>
         <div>
-            <h1>Filter data</h1>
+            <h1 className="bold text-lg font-black">Filter data</h1>
         </div>
-        <div className="filters">
-            <h2>Filters</h2>
-            <div>
-                <label>Start time</label>
-                <Datetime initialValue={parseDate(filteredRows[0]?.createdOn)} onChange={handleStartDateChange}/>
+        <div className="filters pt-8">
+            <h2 className="text-md">Filters</h2>
+            <div className="pt-4">
+                <label htmlFor={startDataId}>Start time</label>
+                <Datetime id={startDataId} initialValue={parseDate(filteredRows[0]?.createdOn)} onChange={handleStartDateChange}/>
             </div>
-            <div>
-                <label>End time</label>
+            <div className="pt-4">
+                <label htmlFor={endDateId}>End time</label>
                 <Datetime initialValue={parseDate(filteredRows[filteredRows.length - 1]?.createdOn)} onChange={handleEndDateChange}/>
             </div>
             <div>
-                <label>Categories</label>
+                <label htmlFor={categoryId}>Categories</label>
                 <MultiSelectDropdown
                     options={[...allCategories]}
                     onFilterChange={handleCategoriesChange}
