@@ -1,0 +1,1 @@
+i was tired of manually entering my wise expenses into splitwise 😤
