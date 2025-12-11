@@ -66,7 +66,6 @@ export const MultiSelectDropdown = ({
         </span>
             </button>
 
-            {/* Dropdown Options */}
             {isOpen && (
                 <div
                     id="multi-select-options"

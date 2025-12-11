@@ -1,5 +1,5 @@
 import {CSVDataTable, CSVRow} from "./CSVDataTable";
-import {useEffect, useId, useState} from "react";
+import React, {useEffect, useId, useState} from "react";
 import Datetime from "react-datetime";
 import '../css/datetime.css'
 import Moment from "moment";
@@ -21,7 +21,6 @@ export const FilterTable: React.FC<FilterTableProps> = ({onPrev, onNext, onChang
     const endDateId = useId()
     const categoryId = useId()
 
-
     const parseDate = (dt: number | Date | string | Moment.Moment | undefined): Moment.Moment => {
         if (!dt) return Moment(0)
         if (typeof dt === 'string') return Moment(Date.parse(dt));
@@ -38,33 +37,21 @@ export const FilterTable: React.FC<FilterTableProps> = ({onPrev, onNext, onChang
         categories: [...allCategories]
     })
 
-    const applyFilters = () => {
-        console.log(csvRows.length);
-        console.log(filters.startDate.format(dateTimeFormat));
-        const filteredRows = csvRows.filter(row => {
+    useEffect(() => {
+        const newRows = csvRows.filter(row => {
             if (!parseDate(row.createdOn).isBetween(filters.startDate, filters.endDate)) return false;
             if (!filters.categories.includes(row.category)) return false;
             return true;
         });
-        console.log(filteredRows.length);
-        onChange({"transactions": filteredRows});
-        setFilteredRows(filteredRows);
-    }
+        if (newRows.length != filteredRows.length) {
+            onChange({"transactions": filteredRows});
+            setFilteredRows(newRows);
+        }
+    }, [filteredRows, filters]);
 
-    const handleStartDateChange = (sd: string | Moment.Moment) => {
-        // console.log(sd.format(dateTimeFormat));
-        setFilters({...filters, startDate: parseDate(sd)})
-        applyFilters();
-    }
-    const handleEndDateChange = (ed: string | Moment.Moment) => {
-        setFilters({...filters, endDate: parseDate(ed)})
-        applyFilters();
-    }
-
-    const handleCategoriesChange = (selected: string[]) => {
-        setFilters({...filters, categories: selected})
-        applyFilters();
-    }
+    const handleStartDateChange = (sd: string | Moment.Moment) => setFilters({...filters, startDate: parseDate(sd)})
+    const handleEndDateChange = (ed: string | Moment.Moment) => setFilters({...filters, endDate: parseDate(ed)})
+    const handleCategoriesChange = (selected: string[]) => setFilters({...filters, categories: selected})
 
     return <div>
         <div>
@@ -74,13 +61,13 @@ export const FilterTable: React.FC<FilterTableProps> = ({onPrev, onNext, onChang
             <h2 className="text-md">Filters</h2>
             <div className="pt-4">
                 <label htmlFor={startDataId}>Start time</label>
-                <Datetime id={startDataId} initialValue={parseDate(filteredRows[0]?.createdOn)} onChange={handleStartDateChange}/>
+                <Datetime initialValue={parseDate(filteredRows[0]?.createdOn)} onChange={handleStartDateChange}/>
             </div>
             <div className="pt-4">
                 <label htmlFor={endDateId}>End time</label>
                 <Datetime initialValue={parseDate(filteredRows[filteredRows.length - 1]?.createdOn)} onChange={handleEndDateChange}/>
             </div>
-            <div>
+            <div className="pt-4 w-10">
                 <label htmlFor={categoryId}>Categories</label>
                 <MultiSelectDropdown
                     options={[...allCategories]}
@@ -88,14 +75,19 @@ export const FilterTable: React.FC<FilterTableProps> = ({onPrev, onNext, onChang
                     placeholder={""}
                 />
             </div>
-
         </div>
-        <div>
+        <div className="pt-4">
             <CSVDataTable rows={filteredRows} />
         </div>
-        <footer>
-            <button onClick={onPrev}>Previous</button>
-            <button onClick={onNext}>Next</button>
+        <footer className="pt-8">
+            <div className="inline-flex">
+                <button
+                    className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-l"
+                    onClick={onPrev}>Previous</button>
+                <button
+                    className={ "bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-r"}
+                    onClick={onNext}>Next</button>
+            </div>
         </footer>
     </div>
 }

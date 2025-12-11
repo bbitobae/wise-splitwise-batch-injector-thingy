@@ -1,5 +1,6 @@
-import React, {useId} from 'react';
+import React, {useEffect, useId} from 'react';
 import {useState} from "react";
+import {OAuth2User} from "splitwise-ts";
 
 export interface TokenFlowProps {
     onNext: () => void;
@@ -12,6 +13,9 @@ export const TokenFlow: React.FC<TokenFlowProps> = ({ onNext, onChange }) => {
         clientSecret: ''
     })
 
+    const [nextDisabled, setNextDisabled] = useState(true);
+    const [accessTokenErrorReceived, setAccessTokenErrorReceived] = useState(false);
+
     const clientIDID = useId()
     const clientSecretID = useId()
 
@@ -19,7 +23,27 @@ export const TokenFlow: React.FC<TokenFlowProps> = ({ onNext, onChange }) => {
         const { value, name } = event.target
         setFormData({ ...formData, [name]: value })
         onChange({ [name]: value})
+        console.log('handlechange')
     }
+
+    useEffect(() => {
+        setNextDisabled(true)
+        setAccessTokenErrorReceived(false)
+        if (formData.clientID && formData.clientSecret) {
+            const user = new OAuth2User({
+                    clientId: formData.clientID,
+                    clientSecret: formData.clientSecret
+                })
+            user.requestAccessToken()
+                .catch((err) => {
+                    console.error(`Failed to fetch access token from Splitwise API: ${err.message}`)
+                    setAccessTokenErrorReceived(true)
+                })
+                .then(() => {
+                    setNextDisabled(false)
+            })
+        }
+    }, [formData.clientID, formData.clientSecret]);
 
     return <div>
         <div>
@@ -31,7 +55,7 @@ export const TokenFlow: React.FC<TokenFlowProps> = ({ onNext, onChange }) => {
             <label htmlFor={clientIDID}
                    className="block mb-2.5 text-sm font-medium text-heading">Client ID</label>
             <input id={clientIDID} name='clientID'
-                   className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                   className="w-80 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block px-3 py-2.5 shadow-xs placeholder:text-body"
                    placeholder="Client ID" type='text' onChange={handleChange} />
         </div>
         <div className="pt-2">
@@ -40,13 +64,23 @@ export const TokenFlow: React.FC<TokenFlowProps> = ({ onNext, onChange }) => {
                 className="block mb-2.5 text-sm font-medium text-heading">Client Secret</label>
             <input
                 id={clientSecretID}
-                className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                className="w-80 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block px-3 py-2.5 shadow-xs placeholder:text-body"
                 name='client_secret' placeholder="Client Secret" type='password' onChange={handleChange} />
         </div>
-        <footer className="pt-2">
+        {
+            accessTokenErrorReceived && (<div className="p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft">
+                <span className="text-red-800 font-bold">Failed to get access token from Splitwise API</span>
+            </div>)
+        }
+        {
+            !nextDisabled && (<div className="p-4 mb-4 text-sm text-fg-success-strong rounded-base bg-success-soft">
+                <span className="text-green-800 font-bold">Got token from Splitwise API</span>
+            </div>)
+        }
+        <footer className="pt-4">
             <button
-                className="max-w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={onNext}>Next</button>
+                className={nextDisabled ? "bg-gray-500 text-grey font-bold py-2 px-4 rounded" : "max-w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
+                onClick={onNext} disabled={nextDisabled}>Next</button>
         </footer>
     </div>
 }

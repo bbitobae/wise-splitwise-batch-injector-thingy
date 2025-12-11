@@ -88,7 +88,7 @@ export const UploadCSVFlow: React.FC<UploadCSVProps> = ({onNext, onPrev, onChang
     })
 
     const [preview, setPreview] = useState(<div></div>)
-    const [nextDisabled, setNextDisabled] = useState<boolean>(true);
+    const [nextDisabled, setNextDisabled] = useState(true);
     parseFiles.shift()?.then(result => {
         return setPreview(result);
     })
@@ -99,7 +99,7 @@ export const UploadCSVFlow: React.FC<UploadCSVProps> = ({onNext, onPrev, onChang
             <p>Upload your transactions CSV file. </p>
             <p>This can be found at...</p>
         </div>
-       <div className="pt-8">
+       <div className="pt-4">
            <section className="container">
                <div {...getRootProps({className: "dropzone"})}>
                    <input {...getInputProps()} />
