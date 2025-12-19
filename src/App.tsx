@@ -5,6 +5,7 @@ import {TokenFlow} from "./FlowElements/TokenFlow";
 import {UploadCSVFlow} from "./FlowElements/UploadCSVFlow";
 import {FilterTable} from "./FlowElements/FilterTable";
 import {CSVRow} from "./FlowElements/CSVDataTable";
+import {EditTable} from "./FlowElements/EditTable";
 
 function App() {
   const [step, setStep] = useState(1);
@@ -25,6 +26,7 @@ function App() {
       {step === 1 && <TokenFlow onNext={handleNextStep} onChange={handleFormDataChange} />}
       {step === 2 && <UploadCSVFlow onNext={handleNextStep} onPrev={handlePrevStep} onChange={handleFormDataChange} />}
       {step === 3 && <FilterTable onPrev={handlePrevStep} onNext={handleNextStep} onChange={handleFormDataChange} csvRows={formData.csvRows} />}
+      {step === 4 && <EditTable onPrev={handlePrevStep} onNext={handleNextStep} onChange={handleFormDataChange} transactions={formData.transactions} />}
     </div>
 }
 

@@ -67,7 +67,7 @@ export const FilterTable: React.FC<FilterTableProps> = ({onPrev, onNext, onChang
                 <label htmlFor={endDateId}>End time</label>
                 <Datetime initialValue={parseDate(filteredRows[filteredRows.length - 1]?.createdOn)} onChange={handleEndDateChange}/>
             </div>
-            <div className="pt-4 w-10">
+            <div className="pt-4 w-40">
                 <label htmlFor={categoryId}>Categories</label>
                 <MultiSelectDropdown
                     options={[...allCategories]}

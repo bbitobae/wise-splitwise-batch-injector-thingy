@@ -5,14 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97babacf-3104-4710-b00c-fc22ab46f5d1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/app/api/login/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/FlowElements/EditTable.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FlowElements/FilterTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/FlowElements/FilterTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FlowElements/MultiSelectDropdown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/FlowElements/MultiSelectDropdown.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FlowElements/TokenFlow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/FlowElements/TokenFlow.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FlowElements/UploadCSVFlow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/FlowElements/UploadCSVFlow.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vite.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +44,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.localhost:5173.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
@@ -59,7 +61,15 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend/app" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.start">
+    <configuration name="localhost:5173" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:5173/">
+      <method v="2" />
+    </configuration>
     <configuration name="start" type="js.build_tools.npm" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="start" />
@@ -67,6 +77,11 @@
       <envs />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.localhost:5173" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -88,7 +103,9 @@
       <workItem from="1765327603786" duration="6754000" />
       <workItem from="1765338990079" duration="2299000" />
       <workItem from="1765360328309" duration="4208000" />
-      <workItem from="1765417526875" duration="303000" />
+      <workItem from="1765417526875" duration="4987000" />
+      <workItem from="1765843256277" duration="8149000" />
+      <workItem from="1765928379506" duration="3345000" />
     </task>
     <servers />
   </component>

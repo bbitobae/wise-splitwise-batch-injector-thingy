@@ -1,6 +1,7 @@
 import React, {useEffect, useId} from 'react';
 import {useState} from "react";
 import {OAuth2User} from "splitwise-ts";
+import {POST} from "../../backend/app/api/login/route";
 
 export interface TokenFlowProps {
     onNext: () => void;
@@ -8,42 +9,61 @@ export interface TokenFlowProps {
 }
 
 export const TokenFlow: React.FC<TokenFlowProps> = ({ onNext, onChange }) => {
-    const [formData, setFormData] = useState({
-        clientID: '',
-        clientSecret: ''
-    })
+    const [clientID, setClientID] = useState("");
+    const [clientSecret, setClientSecret] = useState("");
 
     const [nextDisabled, setNextDisabled] = useState(true);
     const [accessTokenErrorReceived, setAccessTokenErrorReceived] = useState(false);
-
     const clientIDID = useId()
     const clientSecretID = useId()
 
-    const handleChange = (event: any) => {
-        const { value, name } = event.target
-        setFormData({ ...formData, [name]: value })
-        onChange({ [name]: value})
-        console.log('handlechange')
+    const handleClientIdChange = (event: any) => {
+        setClientID(event.target.value)
+        onChange({ clientID: event.target.value })
     }
+    const handleClientSecretChange = (event: any) => {
+        setClientSecret(event.target.value)
+        onChange({clientSecret: event.target.value})
+    }
+
 
     useEffect(() => {
         setNextDisabled(true)
         setAccessTokenErrorReceived(false)
-        if (formData.clientID && formData.clientSecret) {
-            const user = new OAuth2User({
-                    clientId: formData.clientID,
-                    clientSecret: formData.clientSecret
-                })
-            user.requestAccessToken()
-                .catch((err) => {
-                    console.error(`Failed to fetch access token from Splitwise API: ${err.message}`)
-                    setAccessTokenErrorReceived(true)
-                })
-                .then(() => {
-                    setNextDisabled(false)
+        if (clientID && clientSecret) {
+
+            const jsonBody = {
+                clientId: clientID,
+                clientSecret: clientSecret
+            }
+
+            fetch("/api/login", {
+                method: 'POST',
+                body: JSON.stringify(jsonBody),
+                // mode: 'cors',
+                headers: {
+                    'Authorization': "Bearer " + clientID,
+                    'Content-Type': 'application/json',
+                    // 'Access-Control-Allow-Origin': '*',
+                },
+                credentials: 'include',
+            }).catch((err) => {
+                console.error(`Failed to fetch access token from Splitwise API: ${err.message}`)
+                setAccessTokenErrorReceived(true)
+                return
+            }).then((res) => {
+                if (res) {
+                    res.text().then(text => {
+                        const resJson = JSON.parse(text)
+                        if (resJson && resJson.token) {
+                            onChange({splitWiseToken: resJson.token})
+                            setNextDisabled(false)
+                        }
+                    })
+                }
             })
         }
-    }, [formData.clientID, formData.clientSecret]);
+    }, [clientID, clientSecret]);
 
     return <div>
         <div>
@@ -56,7 +76,7 @@ export const TokenFlow: React.FC<TokenFlowProps> = ({ onNext, onChange }) => {
                    className="block mb-2.5 text-sm font-medium text-heading">Client ID</label>
             <input id={clientIDID} name='clientID'
                    className="w-80 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block px-3 py-2.5 shadow-xs placeholder:text-body"
-                   placeholder="Client ID" type='text' onChange={handleChange} />
+                   placeholder="Client ID" type='text' onChange={handleClientIdChange} />
         </div>
         <div className="pt-2">
             <label
@@ -65,7 +85,7 @@ export const TokenFlow: React.FC<TokenFlowProps> = ({ onNext, onChange }) => {
             <input
                 id={clientSecretID}
                 className="w-80 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block px-3 py-2.5 shadow-xs placeholder:text-body"
-                name='client_secret' placeholder="Client Secret" type='password' onChange={handleChange} />
+                name='client_secret' placeholder="Client Secret" type='password' onChange={handleClientSecretChange} />
         </div>
         {
             accessTokenErrorReceived && (<div className="p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft">

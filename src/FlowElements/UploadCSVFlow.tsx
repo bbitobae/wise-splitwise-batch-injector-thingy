@@ -105,6 +105,7 @@ export const UploadCSVFlow: React.FC<UploadCSVProps> = ({onNext, onPrev, onChang
                    <input {...getInputProps()} />
                    <p>Drag 'n' drop some files here, or click to select files</p>
                </div>
+
                {preview ?? <div className="pt-8">
                    <div>
                        <p>previewing the first 10 rows</p>
