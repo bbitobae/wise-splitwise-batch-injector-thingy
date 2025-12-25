@@ -1,8 +1,8 @@
 import {NextResponse} from "next/server";
-import {OAuth2User} from "splitwise-ts";
+import {Client, OAuth2User} from "splitwise-ts";
 
 export async function OPTIONS() {
-    return NextResponse.json({}, {status: 200})
+    return NextResponse.json({}, { status: 200 });
 }
 
 export async function POST(req: Request) {
@@ -19,21 +19,25 @@ export async function POST(req: Request) {
                 clientSecret: clientSecret
             })
 
-            let res;
-            try {
-                res = await user.requestAccessToken();
-            } catch (err: any) {
-                console.error(`Failed to fetch access token from Splitwise API: ${err.cause}`);
-                res = await Promise.reject(err);
-            }
-            const token = res.access_token;
-            if (!token)
-                return Promise.reject(new Error("Access token not found"));
-            return token;
+            await user.requestAccessToken();
+            const client = new Client(user)
+
+            return client.groups.getGroups()
+                .then(result => {
+                    if (!result || !result.groups) return Promise.reject(new Error("Groups result is empty"));
+                    return result.groups.map((group) => {
+                        return {id: group.id, name: group.name}
+                    });
+                })
+                .catch((error: Error) => {
+                    console.error(error);
+                    return Promise.reject(error)
+            })
         })
-    } catch(err) {
+    } catch {
         return NextResponse.json({error: "Unable to connect to Splitwise API"}, {status: 500});
     }
     if (!result) return NextResponse.json({error: "Unable to connect to Splitwise API"}, {status: 500});
-    return NextResponse.json({token: result})
+    return NextResponse.json({groups: result})
+
 }
